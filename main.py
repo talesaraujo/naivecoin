@@ -1,26 +1,24 @@
 from blockchain import *
 
-def main():
-
-    dumbcoin = Blockchain()
-    dumbcoin.add_block(Block(1, "18/01/2019", { "amount": 4 }))
-    dumbcoin.add_block(Block(2, "19/01/2019", { "amount": 10 }))
-
-    dumbcoin.show()
-    print("Is blockchain valid? ", dumbcoin.is_chain_valid())
+def check_integrity(blockchain):
+    print("Is blockchain valid? ", blockchain.is_chain_valid())
     print("")
 
-    dumbcoin.chain[1].data = { "amount": 100 }
+def test():
 
-    dumbcoin.show()
-    print("Is blockchain valid? ", dumbcoin.is_chain_valid())
-    print("")
+    naivecoin = Blockchain()
+    naivecoin.add_block(Block(1, "18/01/2019", { "amount": 4 }))
+    naivecoin.add_block(Block(2, "19/01/2019", { "amount": 10 }))
+    naivecoin.add_block(Block(3, "20/01/2019", { "amount": 10 }))
+    naivecoin.add_block(Block(4, "20/01/2019", { "amount": 7 }))
 
-    dumbcoin.chain[1].calculate_hash()
+    naivecoin.show()
+    check_integrity(naivecoin)
 
-    dumbcoin.show()
-    print("Is blockchain valid? ", dumbcoin.is_chain_valid())
-    print("")
+    # try to temper chain
+    naivecoin.chain[2].data = { "amount": 1000}
+
+    check_integrity(naivecoin)
 
 if __name__ == '__main__':
-    main()
+    test()
