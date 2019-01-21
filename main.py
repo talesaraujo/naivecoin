@@ -15,7 +15,7 @@ def test():
     naivecoin.show()
     check_integrity(naivecoin)
 
-    # try to temper chain
+    # Try to tamper chain
     naivecoin.chain[2].data = { "amount": 1000}
 
     check_integrity(naivecoin)
