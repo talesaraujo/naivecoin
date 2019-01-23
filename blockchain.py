@@ -10,10 +10,10 @@ class Block:
     def __init__(self, index, timestamp, data, previous_hash=""):
         self.index = index
         self.timestamp = timestamp
+        self.nonce = 0
         self.data = data
         self.previous_hash = previous_hash
         self.hash = self.calculate_hash()
-        self.nonce = 0
 
     def encrypt(self, string):
         string = bytes(string, encoding='utf-8')
@@ -31,16 +31,17 @@ class Block:
         With 'mining' blocks we are just seeking for a hash string with a certain preset of
         characters.
         """
-        while (self.hash[0:difficulty] != (difficult*str.format("0"))):
+        while (self.hash[0:difficulty] != (difficulty*str.format("0"))):
             self.nonce += 1
             self.hash = self.calculate_hash()
 
         print("Block mined: {}".format(self.hash))
 
+
 class Blockchain:
     def __init__(self):
         self.chain = [self.create_genesis_block()]
-        self.difficulty = 2
+        self.difficulty = 4
 
     def create_genesis_block(self):
         return Block(index=0, timestamp="01/01/2019", data="Genesis Block", previous_hash="0")
