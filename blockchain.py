@@ -23,6 +23,17 @@ class Block:
     def calculate_hash(self):
         return self.encrypt(str(self.index) + self.previous_hash + self.timestamp + json.dumps(self.data))
 
+    def mine_block(self, difficulty):
+        """
+        Here we are going to set the difficult required to perform our proof-of-work,
+        whereas 'difficulty' is meant to act as a hindrance on adding a block to the chain.
+        With 'mining' blocks we are just seeking for a hash string with a certain preset of
+        characters.
+        """
+        while (self.hash[0:difficulty] != (difficult*str.format("0"))):
+            self.hash = self.calculate_hash()
+
+        print("Block mined: {}".format(self.hash))
 
 class Blockchain:
     def __init__(self):
