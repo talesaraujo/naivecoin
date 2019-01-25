@@ -1,5 +1,6 @@
 import json
 from Crypto.Hash import SHA256
+from transactions import Transaction
 
 class Block:
     """
@@ -7,11 +8,10 @@ class Block:
     a timestamp, a field representing data in general, and references
     for the previous and the current block itself.
     """
-    def __init__(self, index, timestamp, data, previous_hash=""):
-        self.index = index
+    def __init__(self, timestamp, transactions, previous_hash=""):
         self.timestamp = timestamp
         self.nonce = 0
-        self.data = data
+        self.transactions = transactions
         self.previous_hash = previous_hash
         self.hash = self.calculate_hash()
 
@@ -44,7 +44,7 @@ class Blockchain:
         self.difficulty = 4
 
     def create_genesis_block(self):
-        return Block(index=0, timestamp="01/01/2019", data="Genesis Block", previous_hash="0")
+        return Block(timestamp="01/01/2019", transactions="Genesis Block", previous_hash="0")
 
     def get_latest_block(self):
         return self.chain[len(self.chain) - 1]
