@@ -41,7 +41,9 @@ class Block:
 class Blockchain:
     def __init__(self):
         self.chain = [self.create_genesis_block()]
-        self.difficulty = 4
+        self.difficulty = 2
+        self.pending_transactions = []
+        self.mining_reward = 100
 
     def create_genesis_block(self):
         return Block(timestamp="01/01/2019", transactions="Genesis Block", previous_hash="0")
