@@ -1,6 +1,7 @@
 import json
 from Crypto.Hash import SHA256
 from transactions import Transaction
+import datetime
 
 class Block:
     """
@@ -51,10 +52,14 @@ class Blockchain:
     def get_latest_block(self):
         return self.chain[len(self.chain) - 1]
 
-    def add_block(self, new_block):
-        new_block.previous_hash = self.get_latest_block().hash
-        new_block.mine_block(self.difficulty)
-        self.chain.append(new_block)
+    def mine_pending_transactions(self, mining_reward_addr):
+        """
+        Implement mine_pending_transactions method
+        """
+        
+        block = Block()
+
+
 
     def is_chain_valid(self):
         for i in range(1, len(self.chain)):
