@@ -23,7 +23,9 @@ class Block:
         return hash.hexdigest()
 
     def calculate_hash(self):
-        return self.encrypt(self.previous_hash + str(self.timestamp) + json.dumps(self.data) + str(self.nonce))
+        return self.encrypt(self.previous_hash + str(self.timestamp) + \
+                            json.dumps(self.transactions.__dict__) +   \
+                            str(self.nonce))
 
     def mine_block(self, difficulty):
         """
@@ -37,9 +39,6 @@ class Block:
             self.hash = self.calculate_hash()
 
         print("Block mined: {}".format(self.hash))
-
-
-
 
 
 class Blockchain:
@@ -69,8 +68,17 @@ class Blockchain:
         self.pending_transactions = [Transaction(from_addr=None, to_addr=mining_reward_addr,
                                     amount=self.mining_reward)]
 
-    def create_transaction():
+    def get_balance_of_address(self, addr):
+        balance = 0
 
+        for block in self.chain:
+            for transaction in block.transactions:
+                if (transaction.from_addr ==  addr):
+                    balance -= transaction.amount
+                if (transaction.to_addr == addr):
+                    balance += transaction.amount
+
+        return balance
 
     def is_chain_valid(self):
         for i in range(1, len(self.chain)):
