@@ -1,6 +1,6 @@
 import json
 from Crypto.Hash import SHA256
-from transactions import Transaction
+from transaction import Transaction
 import datetime
 
 class Block:
@@ -23,7 +23,7 @@ class Block:
         return hash.hexdigest()
 
     def calculate_hash(self):
-        return self.encrypt(str(self.index) + self.previous_hash + self.timestamp + json.dumps(self.data) + str(self.nonce))
+        return self.encrypt(self.previous_hash + str(self.timestamp) + json.dumps(self.data) + str(self.nonce))
 
     def mine_block(self, difficulty):
         """
@@ -39,6 +39,9 @@ class Block:
         print("Block mined: {}".format(self.hash))
 
 
+
+
+
 class Blockchain:
     def __init__(self):
         self.chain = [self.create_genesis_block()]
@@ -47,18 +50,26 @@ class Blockchain:
         self.mining_reward = 100
 
     def create_genesis_block(self):
-        return Block(timestamp="01/01/2019", transactions="Genesis Block", previous_hash="0")
+        return Block(timestamp=1546300800, transactions="Genesis Block", previous_hash="0")
 
     def get_latest_block(self):
         return self.chain[len(self.chain) - 1]
 
     def mine_pending_transactions(self, mining_reward_addr):
         """
-        Implement mine_pending_transactions method
+        When a miner call this method, it will pass along its wallet address and if this successfully
+        manage to mine this block then send the reward to this address.
         """
-        
-        block = Block()
+        block = Block(round(1000 * time.time()), self.pending_transactions)
+        block.mine_block(self.difficulty)
 
+        print("Block successfully mined!")
+        self.chain.append(block)
+
+        self.pending_transactions = [Transaction(from_addr=None, to_addr=mining_reward_addr,
+                                    amount=self.mining_reward)]
+
+    def create_transaction():
 
 
     def is_chain_valid(self):

@@ -7,7 +7,8 @@ def check_integrity(blockchain):
 def test():
 
     naivecoin = Blockchain()
-        
+
+    
 
 
 if __name__ == '__main__':
