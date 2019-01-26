@@ -38,7 +38,7 @@ class Block:
             self.nonce += 1
             self.hash = self.calculate_hash()
 
-        print("Block mined: {}".format(self.hash))
+        print("BLOCK MINED: {}".format(self.hash))
 
 
 class Blockchain:
@@ -67,6 +67,9 @@ class Blockchain:
 
         self.pending_transactions = [Transaction(from_addr=None, to_addr=mining_reward_addr,
                                     amount=self.mining_reward)]
+
+    def create_transaction(self, transaction):
+        self.pending_transactions.append(transaction)
 
     def get_balance_of_address(self, addr):
         balance = 0
