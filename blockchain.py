@@ -1,7 +1,7 @@
 import json
 from Crypto.Hash import SHA256
 from transaction import Transaction
-import datetime
+import time
 
 class Block:
     """
@@ -24,7 +24,7 @@ class Block:
 
     def calculate_hash(self):
         return self.encrypt(self.previous_hash + str(self.timestamp) + \
-                            json.dumps(self.transactions.__dict__) +   \
+                            json.dumps(self.transactions) +   \
                             str(self.nonce))
 
     def mine_block(self, difficulty):
