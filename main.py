@@ -4,7 +4,7 @@ def check_integrity(blockchain):
     print("Is blockchain valid? ", blockchain.is_chain_valid())
     print("")
 
-def test():
+def main():
 
     naivecoin = Blockchain()
     naivecoin.create_transaction(Transaction('address-1', 'address-2', 100))
@@ -16,4 +16,4 @@ def test():
     print('\nBalance of mine is {}'.format(naivecoin.get_balance_of_address('address-of-mine')))
 
 if __name__ == '__main__':
-    test()
+    main()
