@@ -23,8 +23,8 @@ class Block:
         return hash.hexdigest()
 
     def calculate_hash(self):
-        return self.encrypt(self.previous_hash + str(self.timestamp) + \
-                            json.dumps(self.transactions) +   \
+        return self.encrypt(self.previous_hash + str(self.timestamp) + 
+                            json.dumps([transaction.as_dict() for transaction in self.transactions]) + 
                             str(self.nonce))
 
     def mine_block(self, difficulty):
@@ -44,12 +44,12 @@ class Block:
 class Blockchain:
     def __init__(self):
         self.chain = [self.create_genesis_block()]
-        self.difficulty = 2
+        self.difficulty = 4
         self.pending_transactions = []
         self.mining_reward = 100
 
     def create_genesis_block(self):
-        return Block(timestamp=1546300800, transactions="Genesis Block", previous_hash="0")
+        return Block(timestamp=1546300800, transactions=[Transaction("none", "none", 0)], previous_hash="0")
 
     def get_latest_block(self):
         return self.chain[len(self.chain) - 1]

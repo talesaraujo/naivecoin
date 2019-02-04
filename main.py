@@ -7,7 +7,7 @@ def check_integrity(blockchain):
 def main():
 
     naivecoin = Blockchain()
-    naivecoin.create_transaction(Transaction('address-1', 'address-2', 100))
+    naivecoin.create_transaction(Transaction('address-1', 'address-2', 300))
     naivecoin.create_transaction(Transaction('address-2', 'address-1', 50))
 
     print('\nStarting the miner...')
