@@ -44,7 +44,7 @@ class Block:
 class Blockchain:
     def __init__(self):
         self.chain = [self.create_genesis_block()]
-        self.difficulty = 4
+        self.difficulty = 2
         self.pending_transactions = []
         self.mining_reward = 100
 
@@ -65,8 +65,8 @@ class Blockchain:
         print("Block successfully mined!")
         self.chain.append(block)
 
-        self.pending_transactions = [Transaction(from_addr=None, to_addr=mining_reward_addr,
-                                    amount=self.mining_reward)]
+        self.pending_transactions = [Transaction(from_addr=None, to_addr=mining_reward_addr, amount=self.mining_reward)]
+
 
     def create_transaction(self, transaction):
         self.pending_transactions.append(transaction)
@@ -80,7 +80,7 @@ class Blockchain:
                     balance -= transaction.amount
                 if (transaction.to_addr == addr):
                     balance += transaction.amount
-
+                    
         return balance
 
     def is_chain_valid(self):
