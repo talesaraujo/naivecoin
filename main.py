@@ -23,11 +23,11 @@ def main():
     print('\nRestarting the miner...')
     naivecoin.mine_pending_transactions('me')
 
-    print('\nMy current balance is {}'.format(naivecoin.get_balance_of_address('me')))
+    print('\nMy current balance is now {}'.format(naivecoin.get_balance_of_address('me')))
 
     check_integrity(naivecoin)
 
-    
+
 
 if __name__ == '__main__':
     main()
