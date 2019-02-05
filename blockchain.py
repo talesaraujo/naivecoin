@@ -49,7 +49,7 @@ class Blockchain:
         self.mining_reward = 100
 
     def create_genesis_block(self):
-        return Block(timestamp=1546300800, transactions=[Transaction("none", "none", 0)], previous_hash="0")
+        return Block(timestamp=1546300800, transactions=[Transaction()], previous_hash="0")
 
     def get_latest_block(self):
         return self.chain[len(self.chain) - 1]
