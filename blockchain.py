@@ -41,6 +41,8 @@ class Block:
         print("BLOCK MINED: {}".format(self.hash))
 
 
+
+
 class Blockchain:
     def __init__(self):
         self.chain = [self.create_genesis_block()]
@@ -93,8 +95,14 @@ class Blockchain:
                 return False
         return True
 
-    def show(self):
+    def show(self, verify=False):
+        separator = 100*"-"
+
+        print(separator)
         for block in self.chain:
             for attribute, value in block.__dict__.items():
                 print("{}: {}".format(attribute, value))
-            print("")
+            print(separator)
+        
+        if (verify):
+            print("Is this blockchain valid? " + ("Yes" if self.is_chain_valid() else "No"))
