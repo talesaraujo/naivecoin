@@ -75,14 +75,12 @@ class Blockchain:
 
     def get_balance_of_address(self, addr):
         balance = 0
-
         for block in self.chain:
             for transaction in block.transactions:
                 if (transaction.from_addr ==  addr):
                     balance -= transaction.amount
                 if (transaction.to_addr == addr):
                     balance += transaction.amount
-                    
         return balance
 
     def is_chain_valid(self):
@@ -94,12 +92,13 @@ class Blockchain:
             if (current_block.previous_hash != previous_block.hash):
                 return False
         return True
-
+        
     def show(self, verify=False):
         separator = 100*"-"
 
         print(separator)
-        for block in self.chain:
+        for index, block in enumerate(self.chain):
+            print("[Block {}]".format(index))
             for attribute, value in block.__dict__.items():
                 print("{}: {}".format(attribute, value))
             print(separator)

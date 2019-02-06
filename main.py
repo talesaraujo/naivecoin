@@ -11,13 +11,19 @@ def main():
 
     print('\n\nStarting the miner...')
     naivecoin.mine_pending_transactions('me')
-    print('\nMy current balance is {}'.format(naivecoin.get_balance_of_address('me')))
+    print('My current balance is {}\n'.format(naivecoin.get_balance_of_address('me')))
 
     naivecoin.show(verify=True)
 
     print('\n\nRestarting the miner...')
     naivecoin.mine_pending_transactions('me')
-    print('\nMy current balance is now {}'.format(naivecoin.get_balance_of_address('me')))
+    print('My current balance is now {}\n'.format(naivecoin.get_balance_of_address('me')))
+
+    naivecoin.show(verify=True)
+
+    print('\n\nRestarting the miner...')
+    naivecoin.mine_pending_transactions('me')
+    print('My current balance is now {}\n'.format(naivecoin.get_balance_of_address('me')))
 
     naivecoin.show(verify=True)
 
