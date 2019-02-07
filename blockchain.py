@@ -5,9 +5,8 @@ import time
 
 class Block:
     """
-    This is a simple abstraction of a block, which contains an index,
-    a timestamp, a field representing data in general, and references
-    for the previous and the current block itself.
+    This is a simple abstraction of a block, which contains a timestamp, a transactions list, a nonce value to 
+    perform the proof-of work and references to the previous and the current block itself.
     """
     def __init__(self, timestamp, transactions, previous_hash=""):
         self.timestamp = timestamp
@@ -17,12 +16,27 @@ class Block:
         self.hash = self.calculate_hash()
 
     def encrypt(self, string):
+        """
+        Encodes a standard string to binary form and generates a new SHA256 object with it.
+
+        Args:
+            string: To be converted
+
+        Returns:
+            A string representing the hash in hexadecimal.
+        """
         string = bytes(string, encoding='utf-8')
         hash = SHA256.new()
         hash.update(string)
         return hash.hexdigest()
 
     def calculate_hash(self):
+        """
+        Defines a new SHA256 hash based on all the attributes of the block.
+
+        Returns: 
+            A new string that represents the hash of the block.
+        """
         return self.encrypt(self.previous_hash + str(self.timestamp) + 
                             json.dumps([transaction.as_dict() for transaction in self.transactions]) + 
                             str(self.nonce))
@@ -33,6 +47,9 @@ class Block:
         whereas 'difficulty' is meant to act as a hindrance on adding a block to the chain.
         With 'mining' blocks we are just seeking for a hash string with a certain preset of
         characters.
+
+        Args:
+            difficulty: Zero initial addicional characters to the hash be considered as valid 
         """
         while (self.hash[0:difficulty] != (difficulty*str.format("0"))):
             self.nonce += 1
@@ -42,11 +59,10 @@ class Block:
 
 
 
-
 class Blockchain:
     def __init__(self):
         self.chain = [self.create_genesis_block()]
-        self.difficulty = 2
+        self.difficulty = 4
         self.pending_transactions = []
         self.mining_reward = 100
 
@@ -60,14 +76,17 @@ class Blockchain:
         """
         When a miner call this method, it will pass along its wallet address and if this successfully
         manage to mine this block then send the reward to this address.
+
+        Args:
+            mining_reward_addr: 
         """
-        block = Block(round(1000 * time.time()), self.pending_transactions)
+        block = Block(round(1000 * time.time()), self.pending_transactions, self.get_latest_block().hash)
         block.mine_block(self.difficulty)
 
         print("Block successfully mined!")
         self.chain.append(block)
 
-        self.pending_transactions = [Transaction(from_addr=None, to_addr=mining_reward_addr, amount=self.mining_reward)]
+        self.pending_transactions = []
 
 
     def create_transaction(self, transaction):

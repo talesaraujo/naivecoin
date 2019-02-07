@@ -13,6 +13,8 @@ def main():
     naivecoin.mine_pending_transactions('me')
     print('My current balance is {}\n'.format(naivecoin.get_balance_of_address('me')))
 
+    naivecoin.create_transaction(Transaction('address-3', 'address-1', 200))
+
     naivecoin.show(verify=True)
 
     print('\n\nRestarting the miner...')
@@ -21,6 +23,9 @@ def main():
 
     naivecoin.show(verify=True)
 
+    naivecoin.create_transaction(Transaction('address-1', 'address-2', 50))
+
+    
     print('\n\nRestarting the miner...')
     naivecoin.mine_pending_transactions('me')
     print('My current balance is now {}\n'.format(naivecoin.get_balance_of_address('me')))
