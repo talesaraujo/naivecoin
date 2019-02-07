@@ -49,7 +49,7 @@ class Block:
         characters.
 
         Args:
-            difficulty: Zero initial addicional characters to the hash be considered as valid 
+            difficulty: Zero initial addicional characters to the hash be considered as valid. 
         """
         while (self.hash[0:difficulty] != (difficulty*str.format("0"))):
             self.nonce += 1
@@ -67,9 +67,21 @@ class Blockchain:
         self.mining_reward = 100
 
     def create_genesis_block(self):
+        """
+        Creates the initial block (genesis) for the Blockchain list, with predefined values.
+
+        Returns:
+            A new block instance with 'zero' values.
+        """
         return Block(timestamp=1546300800, transactions=[Transaction()], previous_hash="0")
 
     def get_latest_block(self):
+        """
+        Gets the latest block of the chain.
+
+        Returns:
+            The reference to the latest block of the list.
+        """
         return self.chain[len(self.chain) - 1]
 
     def mine_pending_transactions(self, mining_reward_addr):
@@ -78,7 +90,7 @@ class Blockchain:
         manage to mine this block then send the reward to this address.
 
         Args:
-            mining_reward_addr: 
+            mining_reward_addr: The address that is going to recieve the mining reward. 
         """
         block = Block(round(1000 * time.time()), self.pending_transactions, self.get_latest_block().hash)
         block.mine_block(self.difficulty)
@@ -86,13 +98,26 @@ class Blockchain:
         print("Block successfully mined!")
         self.chain.append(block)
 
-        self.pending_transactions = []
+        self.pending_transactions = [Transaction(None, mining_reward_addr, self.mining_reward)]
 
 
     def create_transaction(self, transaction):
+        """
+        Appends a transaction object to the pending transactions list.
+        """
         self.pending_transactions.append(transaction)
 
     def get_balance_of_address(self, addr):
+        """
+        Based on the blocks of the chain, and its transactions, it computes the actual wallet balance of a 
+        certain user and gives the result.
+
+        Args:
+            addr: The user's address in which we are looking to find the balance.
+
+        Returns:
+            The balance of this user.
+        """
         balance = 0
         for block in self.chain:
             for transaction in block.transactions:
@@ -103,6 +128,12 @@ class Blockchain:
         return balance
 
     def is_chain_valid(self):
+        """
+        Iterates over the chain in order to verify if there is any inconsistency within it.
+
+        Returns:
+            True if this is a valid chain and False otherwise.
+        """
         for i in range(1, len(self.chain)):
             current_block = self.chain[i]
             previous_block = self.chain[i-1]
@@ -113,6 +144,12 @@ class Blockchain:
         return True
         
     def show(self, verify=False):
+        """
+        Shows the status of the blockchain
+
+        Args:
+            verify: Prints a line out to show whether or not the blockchain is valid.
+        """
         separator = 100*"-"
 
         print(separator)
